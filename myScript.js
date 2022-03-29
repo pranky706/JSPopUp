@@ -17,7 +17,7 @@ const sendCustomer = async (customer) => {
     body: JSON.stringify(customer),
     headers: new Headers({'Content-Type': 'application/json'})
   });
-  const myJson = await response.json();
+  const myJson = await response;
   console.log(myJson);
 }
 
