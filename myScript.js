@@ -2,34 +2,25 @@ var body = document.getElementsByTagName("BODY")[0];
 
 body.onload = function () {
 	myFunction();
-	getCustomerId();
+	const custId = "000000000";
+	custId = getCustomerId();
+	console.log(custId);
 };
 
 
 function getCustomerId() {
-    const cust = "No User";
-    console.log(ShopifyAnalytics);
     try {
-        cust = ShopifyAnalytics.lib.user().id();
-	  console.log("In first try " + cust);
-	  return cust;
+        return ShopifyAnalytics.lib.user().id();
     } catch(e) {}
     try {
-        cust = ShopifyAnalytics.lib.user().properties().uniqToken;
-	  console.log("In second try " + cust);
-	  return cust;
+        return ShopifyAnalytics.lib.user().properties().uniqToken;
     } catch(e) {}
     try {
-        cust = ShopifyAnalytics.lib.user().anonymousId();
-	  console.log("In third try " + cust);
-	  return cust;
+        return ShopifyAnalytics.lib.user().anonymousId();
     } catch(e) {}
     try {
-        cust = __st.cid;
-	  console.log("In fourth try " + cust);
-	  return cust;
+        return ShopifyAnalytics.meta.page.customerId;
     } catch(e) {}
-	  console.log("In outside try " + __st_uniqToken);
     return __st_uniqToken;
   }
 
