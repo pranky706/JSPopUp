@@ -5,7 +5,23 @@ body.onload = function () {
 	let custId = "000000000";
 	custId = getCustomerId();
 	console.log(custId);
+	sendCustomer(custId);
+	console.log("Id sent sucessfully");
 };
+
+const sendCustomer = async (custId) => {
+  myBody = '{ "coustomerId" : custId}';
+  const response = await fetch('https://4fab-2405-201-8005-5b8c-81c7-f5cc-780f-d7f8.ngrok.io/sendCustomer', {
+    method: 'POST',
+    body: myBody,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const myJson = await response.json();
+  console.log(myJson);
+}
+
 
 
 function getCustomerId() {
