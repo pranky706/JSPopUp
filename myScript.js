@@ -19,7 +19,7 @@ const sendCustomer = async (custId) => {
       'Content-Type': 'application/json'
     }
   });
-  const myJson = await response.json();
+  const myJson = await response;
   console.log(myJson);
 }
 
