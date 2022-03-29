@@ -8,6 +8,7 @@ body.onload = function () {
 
 function getCustomerId() {
     const cust = "No User";
+    console.log(ShopifyAnalytics);
     try {
         cust = ShopifyAnalytics.lib.user().id();
 	  console.log("In first try " + cust);
