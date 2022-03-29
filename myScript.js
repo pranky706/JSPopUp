@@ -1,10 +1,52 @@
 var body = document.getElementsByTagName("BODY")[0];
 
-body.onload = function() {myFunction()};
+body.onload = function () {
+	myFunction();
+	getCustomerId();
+};
+
+
+function getCustomerId() {
+    const cust = "No User";
+    try {
+      let curr = window.ShopifyAnalytics.meta.page.customerId;
+      if (curr !== undefined && curr !== null && curr !== "") {
+	  cust = curr;
+	  console.log(cust);
+        return curr;
+      }
+    } catch(e) { }
+    try {
+      let curr = window.meta.page.customerId;
+      if (curr !== undefined && curr !== null && curr !== "") {
+	  cust = curr;
+	  console.log(cust);
+        return curr;
+      }
+    } catch (e) { }    
+    try {
+      let curr = _st.cid;
+      if (curr !== undefined && curr !== null && curr !== "") {
+	  cust = curr;
+	  console.log(cust);
+        return curr;
+      }
+    } catch (e) { }
+    try {
+      let curr = ShopifyAnalytics.lib.user().traits().uniqToken;
+      if (curr !== undefined && curr !== null && curr !== "") {
+	  cust = curr;
+	  console.log(cust);
+        return curr;
+      }
+    } catch (e) { }
+    console.log(cust);
+    return null;
+  }
 
 function myFunction() {
 
-var styles = `.btn{
+	var styles = `.btn{
   position: absolute;
   top: 50%;
   left: 50%;
@@ -69,20 +111,20 @@ var styles = `.btn{
     text-decoration:none;
 }`;
 
-addCss(styles);
-  createCustomAlert("This is an alert");
+	addCss(styles);
+	createCustomAlert("This is an alert");
 }
 
 
 function addCss(cssCode) {
-var styleElement = document.createElement("style");
-  styleElement.type = "text/css";
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = cssCode;
-  } else {
-    styleElement.appendChild(document.createTextNode(cssCode));
-  }
-  document.getElementsByTagName("head")[0].appendChild(styleElement);
+	var styleElement = document.createElement("style");
+	styleElement.type = "text/css";
+	if (styleElement.styleSheet) {
+		styleElement.styleSheet.cssText = cssCode;
+	} else {
+		styleElement.appendChild(document.createTextNode(cssCode));
+	}
+	document.getElementsByTagName("head")[0].appendChild(styleElement);
 }
 
 
@@ -92,44 +134,47 @@ var closeModal = "Ok";
 
 //Function To Create Custom Alert
 function createCustomAlert(txt) {
-    doc = document;
+	doc = document;
 
-    if(doc.getElementById("modalContainer")) return;
+	if (doc.getElementById("modalContainer")) return;
 
-  //Create Div For Modal Container Body
-    modalObject = doc.getElementsByTagName("body")[0].appendChild(doc.createElement("div"));
-    modalObject.id = "modalContainer";
-    modalObject.style.height = doc.documentElement.scrollHeight + "px";
-  
-   //Create Div For Alert Box Container Body
-    alertObj = modalObject.appendChild(doc.createElement("div"));
-    alertObj.id = "alertBox";
-    if(doc.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
-    alertObj.style.left = (doc.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
-    alertObj.style.visiblity="visible";
+	//Create Div For Modal Container Body
+	modalObject = doc.getElementsByTagName("body")[0].appendChild(doc.createElement("div"));
+	modalObject.id = "modalContainer";
+	modalObject.style.height = doc.documentElement.scrollHeight + "px";
 
-   //Create Element For Title Alert
-    h1 = alertObj.appendChild(doc.createElement("h1"));
-  h1.appendChild(doc.createTextNode(titleAlert));
-  
-   //Create Tag For Alert Body Content
-      msg = alertObj.appendChild(doc.createElement("p"));
-      msg.appendChild(doc.createTextNode(txt));
-      msg.innerHTML = txt;
+	//Create Div For Alert Box Container Body
+	alertObj = modalObject.appendChild(doc.createElement("div"));
+	alertObj.id = "alertBox";
+	if (doc.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
+	alertObj.style.left = (doc.documentElement.scrollWidth - alertObj.offsetWidth) / 2 + "px";
+	alertObj.style.visiblity = "visible";
 
-     //Create Tag To Close Modal Button
-    btn = alertObj.appendChild(doc.createElement("a"));
-    btn.id = "closeBtn";
-    btn.appendChild(doc.createTextNode(closeModal));
-    btn.href = "#";
-    btn.focus();
-    btn.onclick = function() { removeCustomAlert();return false; }
+	//Create Element For Title Alert
+	h1 = alertObj.appendChild(doc.createElement("h1"));
+	h1.appendChild(doc.createTextNode(titleAlert));
 
-    alertObj.style.display = "block";
-    
+	//Create Tag For Alert Body Content
+	msg = alertObj.appendChild(doc.createElement("p"));
+	msg.appendChild(doc.createTextNode(txt));
+	msg.innerHTML = txt;
+
+	//Create Tag To Close Modal Button
+	btn = alertObj.appendChild(doc.createElement("a"));
+	btn.id = "closeBtn";
+	btn.appendChild(doc.createTextNode(closeModal));
+	btn.href = "#";
+	btn.focus();
+	btn.onclick = function () {
+		removeCustomAlert();
+		return false;
+	}
+
+	alertObj.style.display = "block";
+
 }
 
-  //Function To Remove Custom Alert
+//Function To Remove Custom Alert
 function removeCustomAlert() {
-    document.getElementsByTagName("body")[0].removeChild(document.getElementById("modalContainer"));
+	document.getElementsByTagName("body")[0].removeChild(document.getElementById("modalContainer"));
 }
