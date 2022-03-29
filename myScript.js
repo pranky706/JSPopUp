@@ -15,7 +15,8 @@ const sendCustomer = async (custId) => {
     method: 'POST',
     body: myBody,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+	'Access-Control-Request-Method' : 'POST'
     }
   });
   const myJson = await response.json();
