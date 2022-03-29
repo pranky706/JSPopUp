@@ -15,9 +15,7 @@ const sendCustomer = async (customer) => {
     mode: 'no-cors',
     method: 'POST',
     body: JSON.stringify(customer),
-    headers: {
-      'content-type': 'application/json'
-    }
+    headers: new Headers({'content-type': 'application/json'})
   });
   const myJson = await response;
   console.log(myJson);
