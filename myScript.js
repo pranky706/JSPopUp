@@ -12,13 +12,11 @@ body.onload = function () {
 const sendCustomer = async (custId) => {
   myBody = '{ "coustomerId" : custId}';
   const response = await fetch('https://4fab-2405-201-8005-5b8c-81c7-f5cc-780f-d7f8.ngrok.io/sendCustomer', {
+    mode: 'no-cors',
     method: 'POST',
     body: myBody,
     headers: {
-      'Content-Type': 'application/json',
-	'Access-Control-Request-Method' : 'POST',
-	'Access-Control-Allow-Origin' : "*",
-	'Access-Control-Allow-Headers': "*"
+      'Content-Type': 'application/json'
     }
   });
   const myJson = await response.json();
