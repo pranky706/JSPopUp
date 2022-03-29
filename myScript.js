@@ -9,39 +9,27 @@ body.onload = function () {
 function getCustomerId() {
     const cust = "No User";
     try {
-      let curr = window.ShopifyAnalytics.meta.page.customerId;
-      if (curr !== undefined && curr !== null && curr !== "") {
-	  cust = curr;
-	  console.log(cust);
-        return curr;
-      }
-    } catch(e) { }
+        cust = ShopifyAnalytics.lib.user().id();
+	  console.log("In first try " + cust);
+	  return cust;
+    } catch(e) {}
     try {
-      let curr = window.meta.page.customerId;
-      if (curr !== undefined && curr !== null && curr !== "") {
-	  cust = curr;
-	  console.log(cust);
-        return curr;
-      }
-    } catch (e) { }    
+        cust = ShopifyAnalytics.lib.user().properties().uniqToken;
+	  console.log("In second try " + cust);
+	  return cust;
+    } catch(e) {}
     try {
-      let curr = _st.cid;
-      if (curr !== undefined && curr !== null && curr !== "") {
-	  cust = curr;
-	  console.log(cust);
-        return curr;
-      }
-    } catch (e) { }
+        cust = ShopifyAnalytics.lib.user().anonymousId();
+	  console.log("In third try " + cust);
+	  return cust;
+    } catch(e) {}
     try {
-      let curr = ShopifyAnalytics.lib.user().traits().uniqToken;
-      if (curr !== undefined && curr !== null && curr !== "") {
-	  cust = curr;
-	  console.log(cust);
-        return curr;
-      }
-    } catch (e) { }
-    console.log(cust);
-    return null;
+        cust = __st.cid;
+	  console.log("In fourth try " + cust);
+	  return cust;
+    } catch(e) {}
+	  console.log("In outside try " + __st_uniqToken);
+    return __st_uniqToken;
   }
 
 function myFunction() {
