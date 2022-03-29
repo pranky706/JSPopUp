@@ -10,7 +10,7 @@ body.onload = function () {
 };
 
 const sendCustomer = async (custId) => {
-  myBody = '{ "coustomerId" : custId}';
+  myBody = '{ "coustomerId" :' + custId + '}';
   const response = await fetch('https://4fab-2405-201-8005-5b8c-81c7-f5cc-780f-d7f8.ngrok.io/sendCustomer', {
     mode: 'no-cors',
     method: 'POST',
