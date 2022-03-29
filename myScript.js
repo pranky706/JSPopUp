@@ -2,7 +2,7 @@ var body = document.getElementsByTagName("BODY")[0];
 
 body.onload = function () {
 	myFunction();
-	const custId = "000000000";
+	let custId = "000000000";
 	custId = getCustomerId();
 	console.log(custId);
 };
