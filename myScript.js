@@ -1,6 +1,10 @@
+
+
+
 var body = document.getElementsByTagName("BODY")[0];
 
 body.onload = function () {
+	getDateConfig();
 	myFunction();
 	let custId = "000000000";
 	custId = getCustomerId();
@@ -9,6 +13,24 @@ body.onload = function () {
 	sendCustomer(customer);
 	console.log("Id sent sucessfully");
 };
+
+
+const getDateConfig = () => {
+
+
+fetch('https://92c1-2405-201-8005-5b8c-3127-3157-4de5-94c2.ngrok.io/getDateConfig', {
+  mode: 'no-cors',
+  method: "GET",
+  headers: {
+			"Content-type": "application/json;charset=UTF-8"
+		}
+}).then(response => {
+	console.log(response)
+	json = response.json()
+	console.log(json)
+})
+.catch(err => console.log(err));
+}
 
 const sendCustomer = async (customer) => {
   const response = await fetch('https://4fab-2405-201-8005-5b8c-81c7-f5cc-780f-d7f8.ngrok.io/sendCustomer', {
