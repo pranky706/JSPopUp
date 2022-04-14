@@ -1,11 +1,11 @@
-
+const url = 'https://3fbb-2401-4900-3627-3fe3-69b8-dd9a-31ea-b2e6.ngrok.io';//'http://localhost:8080'
 
 
 var body = document.getElementsByTagName("BODY")[0];
 
 body.onload = function () {
-	getDateConfig();
-	myFunction();
+	//getDateConfig();
+	getTimerConfig();
 	let custId = "000000000";
 	custId = getCustomerId();
 	console.log(custId);
@@ -15,25 +15,55 @@ body.onload = function () {
 };
 
 
-const getDateConfig = () => {
+const getTimerConfig = async () => {
 
 
-fetch('https://92c1-2405-201-8005-5b8c-3127-3157-4de5-94c2.ngrok.io/getDateConfig', {
-  mode: 'no-cors',
+	fetch(url + '/getTimerConfig', {
+  		//mode: 'no-cors',
+  		method: "GET",
+  		headers: {
+			"Content-type": "application/json;charset=UTF-8"
+		}
+	}).then((response) => response.json())
+  	.then((res) => {
+		const time = res.time;
+		console.log(time);
+		setTimeout(() => {
+			popUpFunction();
+		}, time);
+  	})
+	.catch(err => console.log(err));
+}
+
+
+const getDateConfig = async () => {
+
+
+fetch(url + '/getDateConfig', {
+  //mode: 'no-cors',
   method: "GET",
   headers: {
 			"Content-type": "application/json;charset=UTF-8"
 		}
-}).then(response => {
-	console.log(response)
-	json = response.json()
-	console.log(json)
-})
-.catch(err => console.log(err));
+}).then((response) => response.json())
+  .then((res) => {
+	const startDate = new Date(res.startDate);
+	const endDate= new Date(res.endDate);
+    console.log(startDate);
+	console.log(endDate);
+	const currDate = new Date();
+	console.log(currDate);
+	if(currDate <= endDate && startDate <= currDate) {
+		console.log("Yes in between");
+		popUpFunction();
+	} else {
+		console.log("No, not in between");
+	}
+  }).catch(err => console.log(err));
 }
 
 const sendCustomer = async (customer) => {
-  const response = await fetch('https://4fab-2405-201-8005-5b8c-81c7-f5cc-780f-d7f8.ngrok.io/sendCustomer', {
+  const response = await fetch(url + '/sendCustomer', {
     mode: 'no-cors',
     method: 'POST',
     body: JSON.stringify(customer),
@@ -61,7 +91,7 @@ function getCustomerId() {
     return __st_uniqToken;
   }
 
-function myFunction() {
+function popUpFunction() {
 
 	var styles = `.btn{
   position: absolute;
